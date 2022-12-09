@@ -30,9 +30,20 @@ class Triangle:
         vbo = self.ctx.buffer(vertex_data)
         return vbo
 
+    def get_vbo_color(self):
+        color_data = [
+            ( 1.0,  0.0,  0.0),
+            ( 0.0,  1.0,  0.0),
+            ( 0.0,  0.0,  1.0),
+        ]
+        vbo = self.ctx.buffer(np.array(color_data, dtype='f4'))
+        return vbo
+
     def get_vao(self):
+        color = self.get_vbo_color()
         vao = self.ctx.vertex_array(self.shader_program, [
             (self.vbo, '3f', 'in_position'),
+            (color, '3f', 'in_color'),
         ])
         return vao
 
