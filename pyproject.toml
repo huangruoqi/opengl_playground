@@ -6,6 +6,9 @@ authors = ["Ruoqi Huang <huangruoqi374@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+pygame = "^2.1.2"
+moderngl = "^5.7.3"
+numpy = "^1.23.5"
 
 [tool.poetry.dev-dependencies]
 
