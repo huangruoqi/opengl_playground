@@ -5,7 +5,7 @@ description = ""
 authors = ["Ruoqi Huang <huangruoqi374@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 pygame = "^2.1.2"
 moderngl = "^5.7.3"
 numpy = "^1.23.5"
