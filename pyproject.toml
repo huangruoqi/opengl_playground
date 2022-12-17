@@ -9,6 +9,7 @@ python = "^3.9"
 pygame = "^2.1.2"
 moderngl = "^5.7.3"
 numpy = "^1.23.5"
+PyGLM = "^2.6.0"
 
 [tool.poetry.dev-dependencies]
 
