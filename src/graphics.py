@@ -4,7 +4,7 @@ import sys
 from .models import *
 
 class GraphicsEngine:
-    def __init__(self, win_size=(1600, 900)):
+    def __init__(self, win_size=(1280, 720)):
         # init pygame modules
         pg.init()
         # window size
