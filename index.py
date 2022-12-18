@@ -1,4 +1,4 @@
-from graphics.engine import GraphicsEngine
+from src.graphics.engine import GraphicsEngine
 
 if __name__ == '__main__': 
     app = GraphicsEngine()
