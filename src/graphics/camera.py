@@ -9,9 +9,9 @@ SENSITIVITY = 0.04
 
 
 class Camera:
-    def __init__(self, app, position=(0, 0, 4), yaw=-90, pitch=0):
-        self.app = app
-        self.aspect_ratio = app.WIN_SIZE[0] / app.WIN_SIZE[1]
+    def __init__(self, engine, position=(0, 0, 4), yaw=-90, pitch=0):
+        self.engine = engine
+        self.aspect_ratio = engine.WIN_SIZE[0] / engine.WIN_SIZE[1]
         self.position = glm.vec3(position)
         self.up = glm.vec3(0, 1, 0)
         self.right = glm.vec3(1, 0, 0)
@@ -47,7 +47,7 @@ class Camera:
         self.m_view = self.get_view_matrix()
 
     def move(self):
-        velocity = SPEED * self.app.delta_time
+        velocity = SPEED * self.engine.delta_time
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
             self.position += self.forward * velocity

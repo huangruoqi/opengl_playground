@@ -4,9 +4,9 @@ import glm
 
 
 class Texture:
-    def __init__(self, app):
-        self.app = app
-        self.ctx = app.ctx
+    def __init__(self, engine):
+        self.engine = engine
+        self.ctx = engine.ctx
         self.textures = {}
         self.textures[0] = self.get_texture(path='src/graphics/textures/img.png')
         self.textures[1] = self.get_texture(path='src/graphics/textures/img_1.png')
@@ -16,7 +16,7 @@ class Texture:
         self.textures['depth_texture'] = self.get_depth_texture()
 
     def get_depth_texture(self):
-        depth_texture = self.ctx.depth_texture(self.app.WIN_SIZE)
+        depth_texture = self.ctx.depth_texture(self.engine.WIN_SIZE)
         depth_texture.repeat_x = False
         depth_texture.repeat_y = False
         return depth_texture

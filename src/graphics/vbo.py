@@ -79,8 +79,8 @@ class CubeVBO(BaseVBO):
 
 
 class CatVBO(BaseVBO):
-    def __init__(self, app):
-        super().__init__(app)
+    def __init__(self, engine):
+        super().__init__(engine)
         self.format = '2f 3f 3f'
         self.attribs = ['in_texcoord_0', 'in_normal', 'in_position']
 
