@@ -6,7 +6,7 @@ from src.restart.display_manager import DisplayManager
 
 
 class GraphicsEngine:
-    def __init__(self, win_size=(800, 800)):
+    def __init__(self, win_size=(1920, 1080)):
         # init pygame modules
         pg.init()
         # window size
@@ -47,6 +47,7 @@ class GraphicsEngine:
             self.check_events()
             self.render()
             self.delta_time = self.clock.tick(60)
+            print(self.delta_time)
 
 
 if __name__ == '__main__':
