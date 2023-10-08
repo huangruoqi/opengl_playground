@@ -1,4 +1,5 @@
-# OpenGL in with Python
+# OpenGL with Python
+https://www.youtube.com/watch?v=Ab8TOSFfNp4&ab_channel=CoderSpace
 ## Setup
 - install anaconda
 ```
