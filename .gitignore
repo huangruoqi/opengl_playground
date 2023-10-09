@@ -1,1 +1,5 @@
 __pycache__
+output.json
+.gitignore
+archive/
+pytest_html_report.html

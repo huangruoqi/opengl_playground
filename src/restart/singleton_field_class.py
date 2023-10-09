@@ -1,17 +1,8 @@
-import os
 from abc import ABC, abstractmethod
-from typing import Union, Dict
-
-
-def load_shaders(name: str):
-    vert_path = os.path.join('src', 'shader', f'{name}.vert')
-    frag_path = os.path.join('src', 'shader', f'{name}.frag')
-    with open(vert_path) as vf, open(frag_path) as ff:
-        return {'vertex_shader':vf.read(), 'fragment_shader':ff.read()}
 
 
 class SingletonFieldClass(ABC):
-    __fields: Union[Dict, None] = None
+    __fields = None
 
     def __init__(self):
         if self.__class__.__fields is None:
@@ -22,9 +13,10 @@ class SingletonFieldClass(ABC):
         raise NotImplementedError
 
     def __getattr__(self, name: str):
-        return self.__class__.__fields.get(name)
+        return self.__class__.__fields.get(name, super().__getattr__(name))
 
     def __setattr__(self, name: str, value):
+        print(name)
         if name == f"{self.__class__}__fields":
             if self.__class__.__fields is None:
                 return super().__setattr__(name, value)
@@ -33,3 +25,16 @@ class SingletonFieldClass(ABC):
         if name in (self.__class__.__fields or {}): 
             raise Exception(f"{name} is a singleton field. Do not modify it directly!!!")
         return super().__setattr__(name, value)
+
+
+class A(SingletonFieldClass):
+    def get_singleton_fields(self):
+        return {'a': 0, 'b': 0}
+
+class B(SingletonFieldClass):
+    def get_singleton_fields(self):
+        return {'a': 0, 'b': 0}
+
+for i in range(100):
+    a = A()
+    a = B()
