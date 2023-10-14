@@ -4,7 +4,9 @@ import glm
 
 
 class BaseModel:
-    def __init__(self, engine, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(
+        self, engine, vao_name, tex_id, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)
+    ):
         self.engine = engine
         self.pos = pos
         self.vao_name = vao_name
@@ -16,7 +18,8 @@ class BaseModel:
         self.program = self.vao.program
         self.camera = self.engine.camera
 
-    def update(self): ...
+    def update(self):
+        ...
 
     def get_model_matrix(self):
         m_model = glm.mat4()
@@ -42,48 +45,56 @@ class ExtendedBaseModel(BaseModel):
 
     def update(self):
         self.texture.use(location=0)
-        self.program['camPos'].write(self.camera.position)
-        self.program['m_view'].write(self.camera.m_view)
-        self.program['m_model'].write(self.m_model)
+        self.program["camPos"].write(self.camera.position)
+        self.program["m_view"].write(self.camera.m_view)
+        self.program["m_model"].write(self.m_model)
 
     def update_shadow(self):
-        self.shadow_program['m_model'].write(self.m_model)
+        self.shadow_program["m_model"].write(self.m_model)
 
     def render_shadow(self):
         self.update_shadow()
         self.shadow_vao.render()
 
     def on_init(self):
-        self.program['m_view_light'].write(self.engine.light.m_view_light)
+        self.program["m_view_light"].write(self.engine.light.m_view_light)
         # resolution
-        self.program['u_resolution'].write(glm.vec2(self.engine.WIN_SIZE))
+        self.program["u_resolution"].write(glm.vec2(self.engine.WIN_SIZE))
         # depth texture
-        self.depth_texture = self.engine.mesh.texture.textures['depth_texture']
-        self.program['shadowMap'] = 1
+        self.depth_texture = self.engine.mesh.texture.textures["depth_texture"]
+        self.program["shadowMap"] = 1
         self.depth_texture.use(location=1)
         # shadow
-        self.shadow_vao = self.engine.mesh.vao.vaos['shadow_' + self.vao_name]
+        self.shadow_vao = self.engine.mesh.vao.vaos["shadow_" + self.vao_name]
         self.shadow_program = self.shadow_vao.program
-        self.shadow_program['m_proj'].write(self.camera.m_proj)
-        self.shadow_program['m_view_light'].write(self.engine.light.m_view_light)
-        self.shadow_program['m_model'].write(self.m_model)
+        self.shadow_program["m_proj"].write(self.camera.m_proj)
+        self.shadow_program["m_view_light"].write(self.engine.light.m_view_light)
+        self.shadow_program["m_model"].write(self.m_model)
         # texture
         self.texture = self.engine.mesh.texture.textures[self.tex_id]
-        self.program['u_texture_0'] = 0
+        self.program["u_texture_0"] = 0
         self.texture.use(location=0)
         # mvp
-        self.program['m_proj'].write(self.camera.m_proj)
-        self.program['m_view'].write(self.camera.m_view)
-        self.program['m_model'].write(self.m_model)
+        self.program["m_proj"].write(self.camera.m_proj)
+        self.program["m_view"].write(self.camera.m_view)
+        self.program["m_model"].write(self.m_model)
         # light
-        self.program['light.position'].write(self.engine.light.position)
-        self.program['light.Ia'].write(self.engine.light.Ia)
-        self.program['light.Id'].write(self.engine.light.Id)
-        self.program['light.Is'].write(self.engine.light.Is)
+        self.program["light.position"].write(self.engine.light.position)
+        self.program["light.Ia"].write(self.engine.light.Ia)
+        self.program["light.Id"].write(self.engine.light.Id)
+        self.program["light.Is"].write(self.engine.light.Is)
 
 
 class Cube(ExtendedBaseModel):
-    def __init__(self, engine, vao_name='cube', tex_id=0, pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(
+        self,
+        engine,
+        vao_name="cube",
+        tex_id=0,
+        pos=(0, 0, 0),
+        rot=(0, 0, 0),
+        scale=(1, 1, 1),
+    ):
         super().__init__(engine, vao_name, tex_id, pos, rot, scale)
 
 
@@ -97,61 +108,63 @@ class MovingCube(Cube):
 
 
 class Cat(ExtendedBaseModel):
-    def __init__(self, engine, vao_name='cat', tex_id='cat',
-                 pos=(0, 0, 0), rot=(-90, 0, 0), scale=(1, 1, 1)):
+    def __init__(
+        self,
+        engine,
+        vao_name="cat",
+        tex_id="cat",
+        pos=(0, 0, 0),
+        rot=(-90, 0, 0),
+        scale=(1, 1, 1),
+    ):
         super().__init__(engine, vao_name, tex_id, pos, rot, scale)
 
 
 class SkyBox(BaseModel):
-    def __init__(self, engine, vao_name='skybox', tex_id='skybox',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(
+        self,
+        engine,
+        vao_name="skybox",
+        tex_id="skybox",
+        pos=(0, 0, 0),
+        rot=(0, 0, 0),
+        scale=(1, 1, 1),
+    ):
         super().__init__(engine, vao_name, tex_id, pos, rot, scale)
         self.on_init()
 
     def update(self):
-        self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
+        self.program["m_view"].write(glm.mat4(glm.mat3(self.camera.m_view)))
 
     def on_init(self):
         # texture
         self.texture = self.engine.mesh.texture.textures[self.tex_id]
-        self.program['u_texture_skybox'] = 0
+        self.program["u_texture_skybox"] = 0
         self.texture.use(location=0)
         # mvp
-        self.program['m_proj'].write(self.camera.m_proj)
-        self.program['m_view'].write(glm.mat4(glm.mat3(self.camera.m_view)))
+        self.program["m_proj"].write(self.camera.m_proj)
+        self.program["m_view"].write(glm.mat4(glm.mat3(self.camera.m_view)))
 
 
 class AdvancedSkyBox(BaseModel):
-    def __init__(self, engine, vao_name='advanced_skybox', tex_id='skybox',
-                 pos=(0, 0, 0), rot=(0, 0, 0), scale=(1, 1, 1)):
+    def __init__(
+        self,
+        engine,
+        vao_name="advanced_skybox",
+        tex_id="skybox",
+        pos=(0, 0, 0),
+        rot=(0, 0, 0),
+        scale=(1, 1, 1),
+    ):
         super().__init__(engine, vao_name, tex_id, pos, rot, scale)
         self.on_init()
 
     def update(self):
         m_view = glm.mat4(glm.mat3(self.camera.m_view))
-        self.program['m_invProjView'].write(glm.inverse(self.camera.m_proj * m_view))
+        self.program["m_invProjView"].write(glm.inverse(self.camera.m_proj * m_view))
 
     def on_init(self):
         # texture
         self.texture = self.engine.mesh.texture.textures[self.tex_id]
-        self.program['u_texture_skybox'] = 0
+        self.program["u_texture_skybox"] = 0
         self.texture.use(location=0)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

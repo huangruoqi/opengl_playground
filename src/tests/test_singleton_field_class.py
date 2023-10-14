@@ -1,6 +1,9 @@
 from unittest import TestCase
-import os, sys; sys.path.append(os.path.abspath('.'))
+import os, sys
+
+sys.path.append(os.path.abspath("."))
 from src.restart.utils import SingletonFieldClass
+
 
 class TestSingletonFieldClass(TestCase):
     a_call_count = 0
@@ -10,18 +13,19 @@ class TestSingletonFieldClass(TestCase):
         def __init__(self, c=3):
             super().__init__()
             self.c = c
+
         def get_singleton_fields(self):
             TestSingletonFieldClass.a_call_count += 1
-            return {'a': 1, 'b': 2}
+            return {"a": 1, "b": 2}
 
     class B(SingletonFieldClass):
         def __init__(self, c=6):
             super().__init__()
             self.c = c
+
         def get_singleton_fields(self):
             TestSingletonFieldClass.b_call_count += 1
-            return {'a': 4, 'b': 5}
-
+            return {"a": 4, "b": 5}
 
     def setUp(self) -> None:
         return super().setUp()

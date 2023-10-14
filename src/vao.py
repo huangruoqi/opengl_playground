@@ -5,14 +5,16 @@ from .shader_program import ShaderProgram
 class VAO:
     def __init__(self, ctx):
         self.ctx = ctx
+        ShaderProgram.register(ctx)
         self.vbo = VBO(ctx)
-        self.program = ShaderProgram(ctx)
         self.vaos = {}
 
         # cube vao
         self.vaos["cube"] = self.get_vao(
-            program=self.program.programs["default"], vbo=self.vbo.vbos["cube"]
+            program=ShaderProgram.get("default"), vbo=self.vbo.vbos["cube"]
         )
+
+        return
 
         # shadow cube vao
         self.vaos["shadow_cube"] = self.get_vao(

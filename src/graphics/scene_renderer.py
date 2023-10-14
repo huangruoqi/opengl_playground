@@ -1,5 +1,3 @@
-
-
 class SceneRenderer:
     def __init__(self, engine):
         self.engine = engine
@@ -7,7 +5,7 @@ class SceneRenderer:
         self.mesh = engine.mesh
         self.scene = engine.scene
         # depth buffer
-        self.depth_texture = self.mesh.texture.textures['depth_texture']
+        self.depth_texture = self.mesh.texture.textures["depth_texture"]
         self.depth_fbo = self.ctx.framebuffer(depth_attachment=self.depth_texture)
 
     def render_shadow(self):
@@ -31,4 +29,3 @@ class SceneRenderer:
 
     def destroy(self):
         self.depth_fbo.release()
-

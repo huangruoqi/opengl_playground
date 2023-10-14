@@ -10,6 +10,7 @@ class VBO:
         self.vbos["cat"] = CatVBO(ctx)
         self.vbos["skybox"] = SkyBoxVBO(ctx)
         self.vbos["advanced_skybox"] = AdvancedSkyBoxVBO(ctx)
+        self.vbos["background"] = BackgroundVBO(ctx)
 
     def destroy(self):
         [vbo.destroy() for vbo in self.vbos.values()]
@@ -175,3 +176,31 @@ class AdvancedSkyBoxVBO(BaseVBO):
         vertices = [(-1, -1, z), (3, -1, z), (-1, 3, z)]
         vertex_data = np.array(vertices, dtype="f4")
         return vertex_data
+
+
+class BackgroundVBO(BaseVBO):
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        self.format = "2f 2f"
+        self.attribs = ["vert", "uv"]
+
+    def get_vertex_data(self):
+        data = [
+            -1,
+            -1,
+            0.0,
+            0.0,
+            1,
+            -1,
+            1.0,
+            0.0,
+            -1,
+            1,
+            0.0,
+            1.0,
+            1,
+            1,
+            1.0,
+            1.0,
+        ]
+        return np.array(data, dtype="f4")
